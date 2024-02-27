@@ -8,18 +8,20 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
-motor leftMotorA = motor(PORT6, ratio6_1, false);
-motor leftMotorB = motor(PORT7, ratio6_1, true);
-motor leftMotorC = motor(PORT8, ratio6_1, true);
+// right 6, 8, 9
+// left 4, 5, 10
+motor leftMotorA = motor(PORT7, ratio6_1, false);
+motor leftMotorB = motor(PORT4, ratio6_1, true);
+motor leftMotorC = motor(PORT6, ratio6_1, true);
 motor_group LeftDriveSmart = motor_group(leftMotorA, leftMotorB, leftMotorC);
-motor rightMotorA = motor(PORT10, ratio6_1, false);
-motor rightMotorB = motor(PORT13, ratio6_1, false);
-motor rightMotorC = motor(PORT15, ratio6_1, true);
+motor rightMotorA = motor(PORT8, ratio6_1, false);
+motor rightMotorB = motor(PORT9, ratio6_1, false);
+motor rightMotorC = motor(PORT10, ratio6_1, true);
 motor_group RightDriveSmart = motor_group(rightMotorA, rightMotorB, rightMotorC);
 inertial DrivetrainInertial = inertial(PORT9);
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainInertial, 319.19, 320, 40, mm, 0.42857142857142855);
 controller Controller1 = controller(primary);
-motor Intake = motor(PORT5, ratio18_1, false);
+motor Intake = motor(PORT5, ratio18_1, true);
 motor Flywheel = motor(PORT3, ratio6_1, false);
 digital_out Wings = digital_out(Brain.ThreeWirePort.B);
 digital_out BarrierHang = digital_out(Brain.ThreeWirePort.A);
