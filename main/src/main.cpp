@@ -19,6 +19,7 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+
 using namespace vex;
 
 // A global instance of competition
@@ -61,35 +62,21 @@ void pre_auton(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-void toggle_flywheel(){
-  flywheel_tog = !flywheel_tog;
-
-  if (flywheel_tog == true) {
-    Flywheel.spin(reverse);
-  }
-  else {
-    Flywheel.stop();
-  }
-}
 
 void autonomous(void) {
-  toggle_flywheel();
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
-  // Wings.set(true);
-    // Drivetrain.setDriveVelocity(1, pct);
+  /*Wings.set(true);
 
-  // Drivetrain.driveFor(forward, 8, inches);
-  // Controller1.Screen.setCursor(1, 1);
-  // Controller1.Screen.print("wsg gng");
+  Drivetrain.setDriveVelocity(30, percent);
 
-  // Drivetrain.setDriveVelocity(30, pct);
+  Drivetrain.driveFor(reverse, 29, inches);*/
+  
 
-  // Drivetrain.driveFor(reverse, 8, inches);
-  // Controller1.Screen.setCursor(1, 1);
-  // Controller1.Screen.print("wsg gng2");
-  }
+  
+
+}
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -129,57 +116,34 @@ void activate_hang(){
   BarrierHang.set(hang_tog);
 }
 
+void toggle_flywheel(){
+  flywheel_tog = !flywheel_tog;
+
+  if (flywheel_tog == true) {
+    Flywheel.spin(reverse);
+  }
+  else {
+    Flywheel.stop();
+  }
+}
+
 void auton_test() {
   Wings.set(true);
-  // Drivetrain.driveFor(forward, 11, inches, 30, pct);
-  // full_drive.setVelocity(30, percent);
-  // full_drive.spinFor(reverse, 5.6, rev);
-  // vex::task::sleep(200);
-  // full_drive.setVelocity(30, percent);
-  // full_drive.spinFor(forward, 4.5, rev);
-  // vex::task::sleep(500);
-  // Drivetrain.setTurnVelocity(30, percent);
-  // Drivetrain.turnToHeading(45, deg);
-  // vex::task::sleep(500);
-  // full_drive.spinFor(3, rev);
+  full_drive.setVelocity(30, percent);
+  full_drive.spinFor(reverse, 5.6, rev);
+  vex::task::sleep(200);
+  full_drive.setVelocity(30, percent);
+  full_drive.spinFor(forward, 4.5, rev);
+  vex::task::sleep(500);
+  Drivetrain.setTurnVelocity(30, percent);
+  Drivetrain.turnToHeading(45, deg);
+  vex::task::sleep(500);
+  full_drive.spinFor(3, rev);
 }
 
 //
 // Main will set up the competition functions and callbacks.
 //
-void controller_ui() {
-    while (true) {
-    // Battery %
-    Controller1.Screen.setCursor(1, 1);
-    Controller1.Screen.print("BAT:");
-    Controller1.Screen.setCursor(1, 5);
-    Controller1.Screen.print(Brain.Battery.capacity());
-    // Fly Wheel Temperature %
-    Controller1.Screen.setCursor(1, 9);
-    Controller1.Screen.print("FT:");
-    Controller1.Screen.setCursor(1, 12);
-    Controller1.Screen.print(Flywheel.temperature());
-    // Fly Wheel Velocity in RPM  %
-    Controller1.Screen.setCursor(2, 1);
-    Controller1.Screen.print("RPM:");
-    Controller1.Screen.setCursor(2, 5);
-    Controller1.Screen.print((Flywheel.velocity(rpm)*-1));
-    // Drivetrain Left Side Motor Temp AVG %
-    Controller1.Screen.setCursor(3, 1);
-    Controller1.Screen.print("LMs:");
-    Controller1.Screen.setCursor(3, 5);
-    Controller1.Screen.print(left_motors.temperature());
-    // Drivetrain Right Side Motor Temp AVG %
-    Controller1.Screen.setCursor(3, 9);
-    Controller1.Screen.print(" RMs:");
-    Controller1.Screen.setCursor(3, 14);
-    Controller1.Screen.print(right_motors.temperature());
-    // Refreshrate
-    wait(.15, sec); 
-    Controller1.Screen.clearScreen();
-    // In future only refresh updated values & async refresh rates
-  }
-}
 int main() {
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
@@ -193,14 +157,12 @@ int main() {
   Intake.setVelocity(100, percent);
   Flywheel.setVelocity(100, percent);
 
-  Controller1.ButtonA.pressed(change_wing);
+  Controller1.ButtonL1.pressed(change_wing);
 
   Controller1.ButtonY.pressed(activate_hang);
 
   Controller1.ButtonB.pressed(toggle_flywheel);
 
-  // controller_ui();
-  
   // Prevent main from exiting with an infinite loop.
   while (true) {
     wait(100, msec);
